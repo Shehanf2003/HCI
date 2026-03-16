@@ -2,12 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const seedData = require('./utils/seeder');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
-const configRoutes = require('./routes/configRoutes');
+
 const furnitureRoutes = require('./routes/furnitureRoutes');
 const textureRoutes = require('./routes/textureRoutes');
 ;
@@ -24,7 +23,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/config', configRoutes);
 app.use('/api/furniture', furnitureRoutes);
 app.use('/api/textures', textureRoutes);
 
