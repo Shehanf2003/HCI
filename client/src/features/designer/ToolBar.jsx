@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDesign } from '../../context/DesignContext';
 import Button from '../../components/UI/Button';
 import CheckoutModal from '../../components/UI/CheckoutModal';
+import { CheckCircle2, Loader2 } from 'lucide-react';
 
 const ToolBar = () => {
   const { viewMode, setViewMode, room, undo, redo, canUndo, canRedo } = useDesign();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    if (!room) return;
+    
+    setIsSaving(true);
+    const timer = setTimeout(() => {
+      setIsSaving(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [room]);
 
   const takePicture = () => {
     const canvas = document.querySelector('#design-canvas canvas');
@@ -47,6 +60,19 @@ const ToolBar = () => {
       <div className="bg-transparent p-4 border-b flex justify-between items-center dark:border-gray-700 transition-colors duration-300">
         <div className="flex items-center space-x-4">
           <span className="font-semibold text-gray-700 dark:text-gray-200">Design Workspace</span>
+          <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-gray-400 cursor-help" title="Changes are automatically saved">
+            {isSaving ? (
+              <>
+                <Loader2 className="h-4 w-4 text-blue-500 animate-spin" />
+                <span>Saving...</span>
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="h-4 w-4 text-green-500" />
+                <span>Auto-saved</span>
+              </>
+            )}
+          </div>
         </div>
         <div className="flex items-center space-x-2">
           <Button variant="secondary" onClick={undo} disabled={!canUndo}>

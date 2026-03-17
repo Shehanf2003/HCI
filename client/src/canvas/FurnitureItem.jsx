@@ -30,19 +30,34 @@ const GLTFModel = ({ url, customColors, realWorldWidthMeters, onMeshClick }) => 
   
   const clonedScene = useMemo(() => {
     const clone = scene.clone();
+    let meshIndex = 0;
     clone.traverse((child) => {
-      if (child.isMesh && child.material) {
-        child.material = child.material.clone();
+      if (child.isMesh) {
+        // Ensure unique identification for meshes, especially those with duplicate or empty names
+        child.userData.meshPath = child.name ? `${child.name}_${meshIndex}` : `mesh_${meshIndex}`;
+        meshIndex++;
         
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material = child.material.map(m => m.clone());
+          } else {
+            child.material = child.material.clone();
+          }
+          
+          const materials = Array.isArray(child.material) ? child.material : [child.material];
+          
+          materials.forEach(mat => {
+            mat.userData.originalColor = mat.color.getHex();
+            
+            if (mat.isMeshStandardMaterial) {
+              mat.roughness = 0.8;
+              mat.metalness = 0.05;
+            }
+          });
+        }
         
         child.castShadow = true;
         child.receiveShadow = false; 
-        
-        
-        if (child.material.isMeshStandardMaterial) {
-          child.material.roughness = 0.8;
-          child.material.metalness = 0.05;
-        }
       }
     });
     return clone;
@@ -72,12 +87,21 @@ const GLTFModel = ({ url, customColors, realWorldWidthMeters, onMeshClick }) => 
 
   
   useLayoutEffect(() => {
-    if (!customColors) return;
-    
     clonedScene.traverse((child) => {
-      if (child.isMesh && child.material && customColors[child.name]) {
-        child.material.color.set(customColors[child.name]);
-        child.material.needsUpdate = true; 
+      if (child.isMesh && child.material) {
+        const meshId = child.userData.meshPath;
+        const materials = Array.isArray(child.material) ? child.material : [child.material];
+        
+        materials.forEach(mat => {
+          if (customColors && customColors[meshId]) {
+            mat.color.set(customColors[meshId]);
+          } else if (customColors && customColors[child.name]) {
+            mat.color.set(customColors[child.name]); // Backward compatibility
+          } else if (mat.userData.originalColor !== undefined) {
+            mat.color.setHex(mat.userData.originalColor); // Reset to natural model color
+          }
+          mat.needsUpdate = true; 
+        });
       }
     });
   }, [clonedScene, customColors]);
@@ -90,7 +114,7 @@ const GLTFModel = ({ url, customColors, realWorldWidthMeters, onMeshClick }) => 
           if (!e.intersections || e.intersections.length === 0) return;
           const intersection = e.intersections.find(i => i.object && i.object.isMesh);
           if (intersection) {
-            onMeshClick(e, intersection.object.name);
+            onMeshClick(e, intersection.object.userData.meshPath || intersection.object.name);
           }
         }}
       />
