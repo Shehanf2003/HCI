@@ -78,9 +78,8 @@ Open your browser and navigate to the URL shown in the terminal (usually `http:/
 The project follows a strict separation of concerns across the full stack:
 
 * `client/src/components/canvas/`: Contains all 3D logic and components (e.g., `Furniture.jsx`, `Experience.jsx`).
-  * `Furniture.jsx`: Currently renders a placeholder mesh. See comments in the file for instructions on replacing it with a `.gltf` model.
+* `Furniture.jsx`: Currently renders a placeholder mesh. See comments in the file for instructions on replacing it with a `.gltf` model.
 * `client/src/components/dom/`: Contains all 2D UI logic (e.g., `Interface.jsx`).
-* `client/src/store/`: Contains the global Zustand store (`store.js`) managing state like `furnitureColor` or `materialType`.
 * `client/src/App.jsx`: The entry point that layers the 3D Canvas and the 2D Interface.
 * `server/`: Contains the backend API to handle database connections, saving user configurations, and fetching available models or materials.
 
