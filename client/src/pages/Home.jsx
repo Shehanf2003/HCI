@@ -104,11 +104,11 @@ const Home = () => {
               className="bg-white/60 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl p-6 shadow-xl flex flex-col transition-colors duration-300"
             >
               <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-xl mb-6 flex items-center justify-center relative overflow-hidden group">
-                <div className="text-gray-500 dark:text-gray-400 text-sm font-medium text-center p-4">
-                  [Insert GIF: Room Setup]
-                  <br/>
-                  <span className="text-xs opacity-75">(e.g., /assets/step1-setup.gif)</span>
-                </div>
+                <img
+                  src="/assets/step1-setup.gif"
+                  alt="Room Setup Demonstration"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">1. Define Your Space</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -129,11 +129,11 @@ const Home = () => {
               className="bg-white/60 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl p-6 shadow-xl flex flex-col transition-colors duration-300"
             >
               <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-xl mb-6 flex items-center justify-center relative overflow-hidden group">
-                <div className="text-gray-500 dark:text-gray-400 text-sm font-medium text-center p-4">
-                  [Insert GIF: Furniture Placement]
-                  <br/>
-                  <span className="text-xs opacity-75">(e.g., /assets/step2-design.gif)</span>
-                </div>
+                <img
+                  src="/assets/step2-design.gif"
+                  alt="Furnishing Placement Demonstration"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">2. Furnish & Style</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -154,11 +154,11 @@ const Home = () => {
               className="bg-white/60 dark:bg-black/40 border border-black/10 dark:border-white/10 rounded-2xl p-6 shadow-xl flex flex-col transition-colors duration-300"
             >
               <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-xl mb-6 flex items-center justify-center relative overflow-hidden group">
-                <div className="text-gray-500 dark:text-gray-400 text-sm font-medium text-center p-4">
-                  [Insert GIF: 3D Walkthrough]
-                  <br/>
-                  <span className="text-xs opacity-75">(e.g., /assets/step3-visualize.gif)</span>
-                </div>
+                <img
+                  src="/assets/step3-visualize.gif"
+                  alt="3D Visualization Demonstration"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">3. Visualize & Save</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
